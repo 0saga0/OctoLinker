@@ -238,12 +238,12 @@ describe('blob-reader', () => {
       expect(blob.isDiff).toBe(false);
     });
 
-    it('sets blobType to full', () => {
-      expect(blob.blobType).toBe('full');
+    it('sets blobType to gist', () => {
+      expect(blob.blobType).toBe('gist');
     });
 
     it('lineSelector()', () => {
-      expect(blob.lineSelector(123)).toBe(`#LC123`);
+      expect(blob.lineSelector(123)).toBe(`[id$='LC123']`);
     });
 
     it('internals', () => {

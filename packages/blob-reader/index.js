@@ -1,5 +1,11 @@
 import Blob from './blob';
-import { getBlobWrapper, getPath, readLines, getParentSha } from './helper';
+import {
+  getBlobWrapper,
+  getPath,
+  readLines,
+  getParentSha,
+  isGist,
+} from './helper';
 
 function parseBlob(el) {
   const path = getPath(el);
@@ -34,7 +40,7 @@ function parseBlob(el) {
     return [leftBlob, rightBlob];
   }
 
-  let blobType = 'full';
+  let blobType = isGist() ? 'gist' : 'full';
   if (el.getElementsByTagName('pre').length) {
     blobType = 'snippet';
   }

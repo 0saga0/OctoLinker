@@ -51,9 +51,9 @@ exports[`get-position match input "foo
 hello "hello" bar" with regexp "/(["']hello["'])/g" 1`] = `
 Array [
   Object {
-    "endPos": 12,
+    "endPos": 13,
     "lineNumber": 2,
-    "startPos": 7,
+    "startPos": 6,
     "values": Array [
       "hello",
     ],
@@ -78,9 +78,9 @@ Array [
 exports[`get-position match input "foo hello "hello" bar" with regexp "/(["']hello["'])/g" 1`] = `
 Array [
   Object {
-    "endPos": 16,
+    "endPos": 17,
     "lineNumber": 1,
-    "startPos": 11,
+    "startPos": 10,
     "values": Array [
       "hello",
     ],
@@ -91,9 +91,9 @@ Array [
 exports[`get-position match input "foo hello "hello"" with regexp "/(["']hello["'])/g" 1`] = `
 Array [
   Object {
-    "endPos": 16,
+    "endPos": 17,
     "lineNumber": 1,
-    "startPos": 11,
+    "startPos": 10,
     "values": Array [
       "hello",
     ],
@@ -130,9 +130,9 @@ Array [
 exports[`get-position match input "hello "hello"" with regexp "/(["']hello["'])/g" 1`] = `
 Array [
   Object {
-    "endPos": 12,
+    "endPos": 13,
     "lineNumber": 1,
-    "startPos": 7,
+    "startPos": 6,
     "values": Array [
       "hello",
     ],
@@ -143,9 +143,9 @@ Array [
 exports[`get-position match input "hello 'hello'" with regexp "/(["']hello["'])/g" 1`] = `
 Array [
   Object {
-    "endPos": 12,
+    "endPos": 13,
     "lineNumber": 1,
-    "startPos": 7,
+    "startPos": 6,
     "values": Array [
       "hello",
     ],

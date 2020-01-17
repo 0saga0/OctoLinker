@@ -6,7 +6,7 @@ a.octolinker-link:hover {
   text-decoration: none;
 }
 
-body.octolinker-debug .octolinker-link {
+.octolinker-link {
   background-color: rgba(255, 0, 255, 0.2);
   border: 1px solid rgb(255, 0, 255);
 }
@@ -22,6 +22,11 @@ body.octolinker-debug .octolinker-link {
 
 .octolinker-link[href] {
   cursor: pointer;
+}
+
+.octolinker-link[href] {
+  background-color: rgba(0, 255, 0, 0.2);
+  border: 1px solid rgb(0, 255, 0);
 }
 
 .octolinker-link[href]:hover {

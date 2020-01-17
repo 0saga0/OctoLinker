@@ -21,7 +21,12 @@ export default class Blob {
     this.path = path;
     this.lines = lines;
     this.branch = branch;
-    this.blobType = blobType; // one of: diffLeft, diffRight, snippet, full
+
+    if (this.lines.length > 5000) {
+      this.lines = this.lines.slice(0, 500);
+    }
+
+    this.blobType = blobType; // one of: diffLeft, diffRight, snippet, full, gist
   }
 
   lineSelector(lineNumber) {
@@ -35,6 +40,10 @@ export default class Blob {
 
     if (this.blobType === 'snippet') {
       return 'pre';
+    }
+
+    if (this.blobType === 'gist') {
+      return `[id$='LC${lineNumber}']`;
     }
 
     return `#LC${lineNumber}`;
