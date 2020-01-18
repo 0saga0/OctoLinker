@@ -38,8 +38,15 @@ export default function(blobString, regex) {
       const startPos = line.lastIndexOf(matchValue);
       const endPos = startPos + matchValue.length;
 
+      const offset = lineNumber === 1 ? 0 : 1;
+      const startPosInBlob =
+        lines.slice(0, lineNumber - 1).join(' ').length + startPos + offset;
+      const endPosInBlob = startPosInBlob + matchValue.length;
+
       return {
         lineNumber,
+        startPosInBlob,
+        endPosInBlob,
         startPos,
         endPos,
         values: [matchValueStriped],

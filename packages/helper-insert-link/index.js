@@ -60,7 +60,14 @@ export default function(blob, regex, plugin, meta = {}) {
   const matches = [];
 
   getPosition(blob.toString(), regex).forEach(
-    ({ lineNumber, startPos, endPos, values }) => {
+    ({
+      lineNumber,
+      startPos,
+      endPos,
+      startPosInBlob,
+      endPosInBlob,
+      values,
+    }) => {
       let urls = plugin.resolve(blob.path, values, meta);
       if (Array.isArray(urls)) {
         urls = urls.filter(Boolean);
@@ -110,8 +117,13 @@ export default function(blob, regex, plugin, meta = {}) {
       }
 
       // Do not wrap already wrapped link
-      if (el.querySelector(`.${CLASS_NAME}`)) {
+      if (!blob.isSnippet && el.querySelector(`.${CLASS_NAME}`)) {
         return;
+      }
+
+      if (blob.isSnippet) {
+        startPos = startPosInBlob;
+        endPos = endPosInBlob;
       }
 
       // TODO push link el into matches along with the urls prop

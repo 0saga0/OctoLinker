@@ -38,7 +38,7 @@ export default class Blob {
       return `[id$='${side}${lineNumber}'][data-line-number='${lineNumber}']`;
     }
 
-    if (this.blobType === 'snippet') {
+    if (this.isSnippet) {
       return 'pre';
     }
 
@@ -51,6 +51,10 @@ export default class Blob {
 
   get isDiff() {
     return ['diffLeft', 'diffRight'].includes(this.blobType);
+  }
+
+  get isSnippet() {
+    return this.blobType === 'snippet';
   }
 
   toString() {
