@@ -12,6 +12,44 @@ const ALLOWED_DOMAINS = [
   'k8s.io',
 ];
 
+// For go.mod file
+
+function multiRequireRegExpBuilder(input) {
+  return bylineParser(input, {
+    openingPattern: /^require\s\($/,
+    closingPattern: /^\)$/,
+    matchPattern: /^\s?([\S]+)/,
+  }).map(([value]) => {
+    const domain = value.match(DOMAIN_REGEX);
+
+    if (domain && !ALLOWED_DOMAINS.includes(domain[0])) {
+      return;
+    }
+
+    const val = escapeRegexString(value);
+
+    return new RegExp(`require\\s\\([^\)"]+(${val})`, 'gm');
+  });
+}
+
+function singleRequireRegExpBuilder(input) {
+  return bylineParser(input, {
+    matchPattern: /require\s+([^\s\(\)"]+)/,
+  }).map(([value]) => {
+    const domain = value.match(DOMAIN_REGEX);
+
+    if (domain && !ALLOWED_DOMAINS.includes(domain[0])) {
+      return;
+    }
+
+    const val = escapeRegexString(value);
+
+    return new RegExp(`require\\s+(${val})`, 'gm');
+  });
+}
+
+// For regular go files
+
 function multiImportRegExpBuilder(input) {
   return bylineParser(input, {
     openingPattern: /^import\s\($/,
@@ -47,11 +85,13 @@ function singleImportRegExpBuilder(input) {
   });
 }
 
-export default function(blobSource) {
+export default function (blobSource) {
   return []
     .concat(
       multiImportRegExpBuilder(blobSource),
       singleImportRegExpBuilder(blobSource),
+      multiRequireRegExpBuilder(blobSource),
+      singleRequireRegExpBuilder(blobSource),
     )
-    .filter(item => !!item);
+    .filter((item) => !!item);
 }

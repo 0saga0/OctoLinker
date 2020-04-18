@@ -11,7 +11,7 @@ function goFile({ path, target }) {
   list.push('.go');
   list.push('');
 
-  return list.map(file => `{BASE_URL}${basePath}${file}`);
+  return list.map((file) => `{BASE_URL}${basePath}${file}`);
 }
 
 function githubUrls(url) {
@@ -57,7 +57,7 @@ export default {
 
   getPattern() {
     return {
-      pathRegexes: [/\.go$/],
+      pathRegexes: [/\.go$/, /go\.mod$/],
       githubClasses: ['type-go', 'highlight-source-go'],
     };
   },

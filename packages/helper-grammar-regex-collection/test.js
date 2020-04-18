@@ -387,12 +387,33 @@ const fixtures = {
         'import (\n"golang.org/x/net/context"\n"golang.org/pkg/net"\n)',
         ['golang.org/x/net/context', 'golang.org/pkg/net'],
       ],
+
+      // go.mod
+      ['require github.com/foo v1.1.0', ['github.com/foo']],
+      ['require bitbucket.org/foo v1.1.0', ['bitbucket.org/foo']],
+      ['require launchpad.net/foo v1.1.0', ['launchpad.net/foo']],
+      ['require    github.com/foo v1.1.0', ['github.com/foo']],
+      ['require github.com/foo v1.1.0      ', ['github.com/foo']],
+      ['require github.com/foo v1.1.0\n', ['github.com/foo']],
+
+      ['require github.com/foo/v2', ['github.com/foo/v2']],
+
+      ['require (\ngithub.com/foo v1.1.0\n)', ['github.com/foo']],
+      [
+        'require (\ngithub.com/foo v1.1.0\n\ngithub.com/bar v1.1.0\n)',
+        ['github.com/foo', 'github.com/bar'],
+      ],
     ],
     invalid: [
       'simport foo',
       'simport\nfoo',
       'import "octo.com/foo/bar"',
       'import (\n"octo.com/foo/bar"\n)',
+
+      'require (github.com/foo v1.1.0)',
+      'require \n"foo" v1.1.0',
+      'srequire "foo" v1.1.0',
+      'require "foo" v1.1.0',
     ],
   },
   NET_PACKAGE: {
@@ -457,6 +478,9 @@ const fixtures = {
         '<DotNetCliToolReference Include="foo">\n<Version>2.0.0</Version>\n</DotNetCliToolReference>',
         ['foo'],
       ],
+      ['<PackageReference Update="foo" Version="6.2.0" />', ['foo']],
+      ['<FrameworkReference Include="foo" />', ['foo']],
+      ['<FrameworkReference Update="foo" />', ['foo']],
     ],
     invalid: [
       '<PackageReferences Include="EntityFramework" Version="6.2.0" />',
@@ -475,10 +499,33 @@ const fixtures = {
     ],
     invalid: [],
   },
+  NET_PROJ_SDK: {
+    valid: [['<Project Sdk="foo">', ['foo']]],
+    invalid: [
+      '<Project DefaultTargets="Build" ToolsVersion="12.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">',
+    ],
+  },
+  NET_PROJ_FILE_REFERENCE: {
+    valid: [
+      ['<Compile Include="foo">', ['foo']],
+      ['<Compile Update="foo">', ['foo']],
+      ['<Content Include="foo">', ['foo']],
+      ['<Content Include="foo/bar foo">', ['foo/bar foo']],
+      ['<Content Include="foo bar/bar">', ['foo bar/bar']],
+      ['<Content Include="foo bar/bar foo">', ['foo bar/bar foo']],
+      ['<Content Update="foo">', ['foo']],
+      ['<EmbeddedResource Include="foo">', ['foo']],
+      ['<EmbeddedResource Update="foo">', ['foo']],
+      ['<None Include="foo">', ['foo']],
+      ['<None Update="foo">', ['foo']],
+      ['<ProjectReference Include="foo">', ['foo']],
+    ],
+    invalid: [],
+  },
 };
 
 function fixturesIterator(fixturesList, next) {
-  fixturesList.forEach(statement => {
+  fixturesList.forEach((statement) => {
     const text = Array.isArray(statement) ? statement[0] : statement;
     const expected = Array.isArray(statement) ? statement[1] : null;
 
@@ -497,7 +544,7 @@ function addModifiedLines(valid) {
 }
 
 describe('helper-grammar-regex-collection', () => {
-  Object.keys(fixtures).forEach(grammar => {
+  Object.keys(fixtures).forEach((grammar) => {
     const spec = fixtures[grammar];
 
     const { invalid } = spec;
@@ -521,10 +568,10 @@ describe('helper-grammar-regex-collection', () => {
             let match;
             let result = [];
 
-            regexes(text).forEach(regex => {
+            regexes(text).forEach((regex) => {
               // eslint-disable-next-line
               while (match = regex.exec(text)) {
-                result = result.concat(match.filter(item => !!item).slice(1));
+                result = result.concat(match.filter((item) => !!item).slice(1));
               }
             });
 
@@ -534,9 +581,9 @@ describe('helper-grammar-regex-collection', () => {
       });
 
       describe('invalid', () => {
-        fixturesIterator(invalid, text => {
+        fixturesIterator(invalid, (text) => {
           it(text, () => {
-            regexes(text).forEach(regex => {
+            regexes(text).forEach((regex) => {
               assert.equal(regex.exec(text), null);
             });
           });

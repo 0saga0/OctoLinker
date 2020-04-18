@@ -29,7 +29,7 @@ describe('End to End tests', () => {
     ]);
 
     try {
-      const authError = await page.$eval('#login .flash-error', el =>
+      const authError = await page.$eval('#login .flash-error', (el) =>
         el.textContent.trim(),
       );
       throw new Error(authError);
@@ -71,6 +71,14 @@ describe('End to End tests', () => {
           '.selected-line.blob-code .octolinker-link',
         );
       });
+    });
+
+    it('links commentbox', async () => {
+      await executeTest(
+        'https://github.com/OctoLinker/OctoLinker/pull/451/files',
+        'https://nodejs.org/api/path.html',
+        '.highlight-source-js .octolinker-link',
+      );
     });
   });
 

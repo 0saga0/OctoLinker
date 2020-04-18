@@ -13,7 +13,7 @@ import resolverTrustedUrl from '@octolinker/resolver-trusted-url';
 
 function linkDependency(blob, key, value) {
   const isValidSemver = isSemver(value);
-  const regex = jsonRegExKeyValue(key, value, blob.isDiff);
+  const regex = jsonRegExKeyValue(key, value);
 
   return insertLink(blob, regex, this, {
     type: isValidSemver ? 'liveResolverQuery' : 'git',
@@ -21,7 +21,7 @@ function linkDependency(blob, key, value) {
 }
 
 function linkFile(blob, key, value) {
-  const regex = jsonRegExValue(key, value, blob.isDiff);
+  const regex = jsonRegExValue(key, value);
 
   return insertLink(blob, regex, this, { type: 'file' });
 }
@@ -39,7 +39,7 @@ export default {
       return liveResolverQuery({ type: 'bower', target });
     }
 
-    return [gitUrl({ target }), githubShorthand({ target })].map(url =>
+    return [gitUrl({ target }), githubShorthand({ target })].map((url) =>
       resolverTrustedUrl({ target: url }),
     );
   },

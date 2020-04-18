@@ -13,7 +13,7 @@ function buildSearchParams(payload) {
   return new URLSearchParams(params);
 }
 
-export const bulkAction = async function(data) {
+export const bulkAction = async function (data) {
   if (!data.length) {
     return [];
   }
@@ -50,6 +50,7 @@ export const bulkAction = async function(data) {
     const json = await response.json();
     return json.result;
   } catch (error) {
+    // eslint-disable-next-line no-console
     console.log(error);
     return [];
   }

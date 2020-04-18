@@ -8,6 +8,12 @@ const captureQuotedWord = regex`
   ['"]              # end quote
 `;
 
+const captureSpacedQuotedWord = regex`
+  ['"]              # beginning quote
+  (?<$1>[^'"]+)     # capture the word inside the quotes
+  ['"]              # end quote
+`;
+
 const captureJsQuotedWord = regex`
   ['"\`]            # beginning quote
   (?<$1>[^'"\`\s]+) # capture the word inside the quotes
@@ -201,9 +207,25 @@ export const JAVA_IMPORT = regex`
 `;
 
 export const NET_PROJ_PACKAGE = regex`
-  <(PackageReference|DotNetCliToolReference)
+  <(DotNetCliTool|Framework|Package)?Reference
   \s+
   .*
-  Include=${captureQuotedWord}
+  (Include|Update)=${captureQuotedWord}
+  .*/?>
+`;
+
+export const NET_PROJ_SDK = regex`
+  <Project
+  \s+
+  .*
+  Sdk=${captureQuotedWord}
+  .*>
+`;
+
+export const NET_PROJ_FILE_REFERENCE = regex`
+  <(Compile|Content|EmbeddedResource|None|ProjectReference)
+  \s+
+  .*
+  (Include|Update)=${captureSpacedQuotedWord}
   .*/?>
 `;

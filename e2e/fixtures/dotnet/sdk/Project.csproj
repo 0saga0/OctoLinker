@@ -1,0 +1,65 @@
+<!-- @OctoLinkerResolve(https://www.nuget.org/packages/Microsoft.NET.Sdk) -->
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <ItemGroup>
+    <!-- @OctoLinkerResolve(https://www.nuget.org/packages/Microsoft.VisualStudio.Web.CodeGeneration.Tools) -->
+    <DotNetCliToolReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Tools" />
+
+    <!-- @OctoLinkerResolve(https://www.nuget.org/packages/Microsoft.DotNet.Watcher.Tools) -->
+    <DotNetCliToolReference Include="Microsoft.DotNet.Watcher.Tools" Version="2.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <!-- @OctoLinkerResolve(https://www.nuget.org/packages/Microsoft.AspNetCore.App) -->
+    <FrameworkReference Include="Microsoft.AspNetCore.App" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <!-- @OctoLinkerResolve(https://www.nuget.org/packages/Microsoft.Extensions.Hosting.Abstractions) -->
+    <PackageReference Include="Microsoft.Extensions.Hosting.Abstractions" Version="3.1.1" />
+
+    <!-- @OctoLinkerResolve(https://www.nuget.org/packages/Microsoft.Extensions.Hosting.Abstractions) -->
+    <Reference Include="Microsoft.Extensions.Hosting.Abstractions" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <!-- @OctoLinkerResolve(https://www.nuget.org/packages/Microsoft.AspNetCore.Hosting.Abstractions) -->
+    <PackageReference Update="Microsoft.AspNetCore.Hosting.Abstractions" />
+
+    <!-- @OctoLinkerResolve(https://www.nuget.org/packages/Microsoft.Extensions.Hosting.Abstractions) -->
+    <Reference Update="Microsoft.Extensions.Hosting.Abstractions" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <!-- @OctoLinkerResolve(<root>/dotnet/classic/Project.csproj) -->
+    <ProjectReference Include="../classic/Project.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <!-- @OctoLinkerResolve(<root>/dotnet/Directory.Build.props) -->
+    <Compile Include="../Directory.Build.props" />
+    <!-- @OctoLinkerResolve(<root>/dotnet/Directory.Build.props) -->
+    <Compile Update="../Directory.Build.props" />
+
+    <!-- @OctoLinkerResolve(<root>/dotnet/Directory.Build.props) -->
+    <Content Include="../Directory.Build.props" />
+    <!-- @OctoLinkerResolve(<root>/dotnet/Directory.Build.props) -->
+    <Content Update="../Directory.Build.props" />
+
+    <!-- @OctoLinkerResolve(<root>/dotnet/Directory.Build.props) -->
+    <EmbeddedResource Include="../Directory.Build.props" />
+    <!-- @OctoLinkerResolve(<root>/dotnet/Directory.Build.props) -->
+    <EmbeddedResource Update="../Directory.Build.props" />
+
+    <!-- @OctoLinkerResolve(<root>/dotnet/Directory.Build.props) -->
+    <None Include="../Directory.Build.props" />
+    <!-- @OctoLinkerResolve(<root>/dotnet/Directory.Build.props) -->
+    <None Update="../Directory.Build.props" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <!-- @OctoLinkerResolve(<root>/dotnet/foo bar/test file.cs) -->
+    <Content Include="../foo bar/test file.cs" />
+  </ItemGroup>
+
+</Project>

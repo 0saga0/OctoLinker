@@ -1,6 +1,7 @@
 import {
   NET_PACKAGE,
   NET_PROJ_PACKAGE,
+  NET_PROJ_SDK,
 } from '@octolinker/helper-grammar-regex-collection';
 import nugetResolver from '@octolinker/resolver-nuget';
 
@@ -13,12 +14,17 @@ export default {
 
   getPattern() {
     return {
-      pathRegexes: [/packages\.config$/, /\.(cs|fs|vb)proj$/, /\.props$/],
+      pathRegexes: [
+        /packages\.config$/,
+        /\.(cs|fs|vb)proj$/,
+        /\.props$/,
+        /\.targets$/,
+      ],
       githubClasses: [],
     };
   },
 
   getLinkRegexes() {
-    return [NET_PACKAGE, NET_PROJ_PACKAGE];
+    return [NET_PACKAGE, NET_PROJ_PACKAGE, NET_PROJ_SDK];
   },
 };

@@ -1,6 +1,6 @@
 {
   "name": "OctoLinker",
-  "version": "5.2.6",
+  "version": "6.3.1",
   "manifest_version": 2,
   "author": "Stefan Buck",
   "description": "OctoLinker – Links together, what belongs together.",
@@ -40,6 +40,7 @@
   "permissions": [
     "storage",
     "https://github.com/",
+    "https://api.github.com/",
     "https://gist.github.com/",
     "https://octolinker-api.now.sh/"
   ]

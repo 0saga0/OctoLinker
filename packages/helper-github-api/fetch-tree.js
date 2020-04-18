@@ -1,7 +1,7 @@
 import * as storage from '@octolinker/helper-settings';
 import rateLimitNotification from '@octolinker/ratelimit-notification';
 
-export default async function({ user, repo, branch }) {
+export default async function ({ user, repo, branch }) {
   const token = storage.get('githubToken');
 
   const headers = {
@@ -22,6 +22,7 @@ export default async function({ user, repo, branch }) {
       },
     );
   } catch (error) {
+    // eslint-disable-next-line no-console
     console.error(error);
   }
 

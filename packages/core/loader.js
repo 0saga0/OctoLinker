@@ -27,18 +27,16 @@ function injectLiveDemoUrl(url) {
 }
 
 function groupMatchesByType(matches) {
-  const flattenUrls = removeDuplicates(
-    [].concat(
-      ...matches.map(match =>
-        match.urls.map(url => ({
-          ...url,
-          link: match.link,
-        })),
-      ),
+  const flattenUrls = [].concat(
+    ...matches.map((match) =>
+      match.urls.map((url) => ({
+        ...url,
+        link: match.link,
+      })),
     ),
   );
 
-  const apiItems = flattenUrls.filter(({ type }) =>
+  const apiItems = removeDuplicates(flattenUrls).filter(({ type }) =>
     ['registry', 'ping'].includes(type),
   );
 
@@ -73,7 +71,7 @@ function insertLinks({
 
     for (const item of urls) {
       if (item.type === 'internal-link') {
-        if (githubTree.includes(item.path)) {
+        if (githubTree.includes(item.path.replace(/%20/g, ' '))) {
           link.href = item.url;
           if (process.env.OCTOLINKER_LIVE_DEMO) {
             link.href = injectLiveDemoUrl(link.href);
@@ -81,7 +79,7 @@ function insertLinks({
           break;
         }
       } else if (item.type === 'github-search') {
-        const allMatches = githubTree.filter(path =>
+        const allMatches = githubTree.filter((path) =>
           path.endsWith(item.target),
         );
 
@@ -102,6 +100,14 @@ function insertLinks({
 
         if (finalUrl && finalUrl.result) {
           link.href = finalUrl.result;
+
+          if (finalUrl.result.startsWith('https://github.com')) {
+            [, , , user, repo] = finalUrl.result.split('/');
+            link.dataset.repositoryHovercardsEnabled = true;
+            link.dataset.hovercardType = 'repository';
+            link.dataset.hovercardUrl = `/${user}/${repo}/hovercard`;
+          }
+
           if (process.env.OCTOLINKER_LIVE_DEMO) {
             link.href = injectLiveDemoUrl(link.href);
           }
@@ -112,7 +118,7 @@ function insertLinks({
   });
 }
 
-export default async function(matches) {
+export default async function (matches) {
   const { apiItems, internalItems, trustedItems } = groupMatchesByType(matches);
 
   let octolinkerApiResponsePromise = [];
@@ -133,7 +139,7 @@ export default async function(matches) {
     }
   }
 
-  trustedItems.forEach(item => {
+  trustedItems.forEach((item) => {
     item.link.href = item.target;
   });
 

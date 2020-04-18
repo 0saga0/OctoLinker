@@ -8,17 +8,24 @@ function regexBuilder(key, value, groupKey, global) {
   }
 
   const regexValue = escapeRegexString(value);
-  const valueField = `("${regexValue}")`;
+  const valueField = `"(${regexValue})"`;
   return new RegExp(
     `${keyField}\\s*:\\s*${valueField}`,
     global ? 'g' : undefined,
   );
 }
 
-export function jsonRegExKeyValue(key, value, global = false) {
+export function jsonRegExKeyValue(key, value, global = true) {
   return regexBuilder(key, value, true, global);
 }
 
-export function jsonRegExValue(key, value, global = false) {
+export function jsonRegExValue(key, value, global = true) {
   return regexBuilder(key, value, false, global);
+}
+
+export function tomlRegExKeyValue(key, value) {
+  const regexKey = escapeRegexString(key);
+  const regexValue = escapeRegexString(value);
+
+  return new RegExp(`(${regexKey})\\s*=\\s*"(${regexValue})"`, 'g');
 }
